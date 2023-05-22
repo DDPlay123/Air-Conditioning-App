@@ -22,7 +22,7 @@ interface ApiService {
         @Query("Authorization") authorization: String = BuildConfig.API_KEY,
         @Query("format") format: String = "JSON",
         @Query("locationName") locationName: String,
-        @Query("elementName") elementName: String = "Wx,T,RH",
+        @Query("elementName") elementName: String = "Wx,T,RH,PoP6h,PoP12h",
         @Query("timeTo") timeTo: String = Method.getCurrentDateTime(),
         @Query("sort") sort: String = "time",
     ): Response<Weather>

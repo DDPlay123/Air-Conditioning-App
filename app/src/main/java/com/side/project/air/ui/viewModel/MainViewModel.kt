@@ -82,6 +82,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application), K
         get() = _humidity
 
     /**
+     * 降雨機率
+     */
+    private val _rain = MutableLiveData<String>()
+    val rain: LiveData<String>
+        get() = _rain
+
+    /**
      * 天氣狀態(number, description)
      */
     private val _weatherState = MutableLiveData<Pair<String, String>>()
@@ -154,6 +161,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application), K
                                 "T" -> _temperature.value = data.time.last().elementValue[0].value
                                 // 相對濕度
                                 "RH" -> _humidity.value = data.time.last().elementValue[0].value
+                                // 降雨機率 12h
+                                "PoP12h" ->
+                                    _rain.value = if (data.time.isNotEmpty()) data.time.last().elementValue[0].value else "0"
+                                // 降雨機率 6h
+                                "PoP6h" ->
+                                    _rain.value = if (data.time.isNotEmpty()) data.time.last().elementValue[0].value else "0"
                                 // 其他資料
                                 else -> Unit
                             }

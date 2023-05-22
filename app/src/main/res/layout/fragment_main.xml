@@ -87,18 +87,18 @@
             tools:text="23°" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvHumidity"
+            android:id="@+id/tvRain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text='@{String.format(@string/text_humid, viewModel.humidity)}'
+            android:text='@{String.format(@string/text_rain, viewModel.rain)}'
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/guidelineDivider"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="@+id/tvRegion"
             app:layout_constraintTop_toBottomOf="@+id/tvTemperature"
-            tools:text="相對溼度：90%" />
+            tools:text="降雨機率：90%" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvState"
@@ -108,10 +108,10 @@
             android:text='@{viewModel.weatherState.second}'
             android:textColor="@color/white"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvHumidity"
+            app:layout_constraintBottom_toBottomOf="@+id/tvRain"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guidelineDivider"
-            app:layout_constraintTop_toTopOf="@+id/tvHumidity"
+            app:layout_constraintTop_toTopOf="@+id/tvRain"
             tools:text="陰時多雲陣雨或雷雨" />
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -217,7 +217,7 @@
             app:layout_constraintBottom_toTopOf="@+id/clControl"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvHumidity">
+            app:layout_constraintTop_toBottomOf="@+id/tvRain">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgSettings"

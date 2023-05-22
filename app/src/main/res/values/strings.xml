@@ -14,7 +14,7 @@
     <string name="text_min_humid">0%</string>
 
     <string name="text_temp">%s°</string>
-    <string name="text_humid">相對溼度：%s%%</string>
+    <string name="text_rain">降雨機率：%s%%</string>
 
     <string name="content_refresh">刷新</string>
     <string name="content_settings">設定</string>
