@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">冷氣控制器</string>
 
+    <string name="toast_ask_location_permission">請開啟定位權限</string>
+
     <string name="text_on">ON</string>
     <string name="text_off">OFF</string>
     <string name="text_auto_mode">Auto Mode</string>
@@ -11,6 +13,9 @@
     <string name="text_max_humid">100%</string>
     <string name="text_min_humid">0%</string>
 
-    <string name="text_temp">%d°</string>
-    <string name="text_humid">%d%%</string>
+    <string name="text_temp">%s°</string>
+    <string name="text_humid">相對溼度：%s%%</string>
+
+    <string name="content_refresh">刷新</string>
+    <string name="content_settings">設定</string>
 </resources>

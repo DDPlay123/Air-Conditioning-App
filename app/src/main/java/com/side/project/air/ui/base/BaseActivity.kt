@@ -1,4 +1,4 @@
-package com.side.project.air.ui
+package com.side.project.air.ui.base
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
@@ -9,15 +9,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 
-abstract class BaseActivity(@LayoutRes val layoutRes: Int) : AppCompatActivity() {
-    companion object {
-        const val DEFAULT_LATITUDE = 25.043871531367014
-        const val DEFAULT_LONGITUDE = 121.53453374432904
-    }
-
-    private var _binding: ViewDataBinding? = null
-    val binding: ViewDataBinding?
-        get() = _binding
+open class BaseActivity<VB: ViewDataBinding>(@LayoutRes val layoutRes: Int) : AppCompatActivity() {
+    private var _binding: VB? = null
+    val binding: VB
+        get() = _binding!!
 
     override fun onTrimMemory(level: Int) {
         super.onTrimMemory(level)
@@ -29,10 +24,10 @@ abstract class BaseActivity(@LayoutRes val layoutRes: Int) : AppCompatActivity()
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, layoutRes)
 
-        initialize()
+        binding.initialize()
     }
 
-    open fun initialize() {
+    open fun VB.initialize() {
         // 清空ViewModel，避免記憶體洩漏。
         lifecycle.addObserver(object : LifecycleEventObserver {
             override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {

@@ -1,4 +1,4 @@
-package com.side.project.air.utils
+package com.side.project.air.utils.widget
 
 import android.content.Context
 import android.content.res.TypedArray
