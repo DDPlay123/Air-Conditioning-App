@@ -5,7 +5,7 @@ import com.side.project.air.BuildConfig
 import com.side.project.air.data.repo.MainRepo
 import com.side.project.air.data.repo.MainRepoImpl
 import com.side.project.air.ui.viewModel.MainViewModel
-import com.side.project.air.utils.MQTTClient
+import com.side.project.air.network.MQTTClient
 import info.mqtt.android.service.MqttAndroidClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext

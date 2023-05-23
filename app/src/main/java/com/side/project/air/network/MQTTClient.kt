@@ -1,6 +1,7 @@
-package com.side.project.air.utils
+package com.side.project.air.network
 
 import com.side.project.air.BuildConfig
+import com.side.project.air.utils.Method
 import info.mqtt.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.IMqttActionListener
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken

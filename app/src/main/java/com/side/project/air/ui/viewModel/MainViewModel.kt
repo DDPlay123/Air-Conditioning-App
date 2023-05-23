@@ -14,7 +14,7 @@ import com.side.project.air.data.repo.MainRepo
 import com.side.project.air.data.weatherApi.dayNight.DayNight
 import com.side.project.air.data.weatherApi.weather.Weather
 import com.side.project.air.utils.Contracts
-import com.side.project.air.utils.MQTTClient
+import com.side.project.air.network.MQTTClient
 import com.side.project.air.utils.Method
 import com.side.project.air.utils.Resource
 import com.side.project.air.utils.floatFormat
