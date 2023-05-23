@@ -289,7 +289,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), K
      * 發布到 MQTT Topic
      */
     fun publishMQTT(topic: String, message: String, retained: Boolean = false) =
-        mqttClient.publish(topic, message)
+        mqttClient.publish(topic, message, retained = retained)
 
     fun openAirConditioner() =
         publishMQTT(Contracts.ACTIVATE_TOPIC, "1")
