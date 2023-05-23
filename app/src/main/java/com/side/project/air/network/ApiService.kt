@@ -4,7 +4,6 @@ import com.side.project.air.BuildConfig
 import com.side.project.air.data.weatherApi.dayNight.DayNight
 import com.side.project.air.data.weatherApi.weather.Weather
 import com.side.project.air.utils.Method
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers

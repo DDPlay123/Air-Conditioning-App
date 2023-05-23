@@ -14,5 +14,8 @@ fun Activity.requestLocationPermission(): Boolean {
     return true
 }
 
+fun String.floatFormat(): String =
+    "%.1f".format(this.toFloat())
+
 fun Context.displayShortToast(message: String) =
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

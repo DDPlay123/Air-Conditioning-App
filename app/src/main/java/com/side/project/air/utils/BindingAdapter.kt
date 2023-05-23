@@ -6,6 +6,11 @@ import coil.imageLoader
 import coil.load
 import com.side.project.air.R
 import com.side.project.air.data.WeatherStateIcon
+import com.side.project.air.utils.Contracts.MAX_HUMIDITY
+import com.side.project.air.utils.Contracts.MAX_TEMPERATURE
+import com.side.project.air.utils.Contracts.MIN_HUMIDITY
+import com.side.project.air.utils.Contracts.MIN_TEMPERATURE
+import com.side.project.air.utils.widget.CircularSeekBar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -75,6 +80,36 @@ object BindingAdapter {
 
                 else ->
                     imageView.load(R.drawable.baseline_image_search_24, imageLoader = imageView.context.imageLoader)
+            }
+        } catch (ignored: Exception) {
+        }
+    }
+
+    @BindingAdapter("android:convertTemperature")
+    @JvmStatic
+    fun setConvertTemperature(circularSeekBar: CircularSeekBar, progress: String?) {
+        if (progress == null) return
+        val currentProgress = progress.toFloat()
+        try {
+            when {
+                currentProgress > MAX_TEMPERATURE -> circularSeekBar.progress = 100f
+                currentProgress < MIN_TEMPERATURE -> circularSeekBar.progress = 0.0f
+                else -> circularSeekBar.progress = ((currentProgress - MIN_TEMPERATURE) / (MAX_TEMPERATURE - MIN_TEMPERATURE)) * 100
+            }
+        } catch (ignored: Exception) {
+        }
+    }
+
+    @BindingAdapter("android:convertHumidity")
+    @JvmStatic
+    fun setConvertHumidity(circularSeekBar: CircularSeekBar, progress: String?) {
+        if (progress == null) return
+        val currentProgress = progress.toFloat()
+        try {
+            when {
+                currentProgress > MAX_HUMIDITY -> circularSeekBar.progress = 100f
+                currentProgress < MIN_HUMIDITY -> circularSeekBar.progress = 0.0f
+                else -> circularSeekBar.progress = ((currentProgress - MIN_HUMIDITY) / (MAX_HUMIDITY - MIN_HUMIDITY)) * 100
             }
         } catch (ignored: Exception) {
         }

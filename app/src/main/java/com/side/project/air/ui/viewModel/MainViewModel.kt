@@ -13,8 +13,11 @@ import com.side.project.air.data.WeatherStateIcon
 import com.side.project.air.data.repo.MainRepo
 import com.side.project.air.data.weatherApi.dayNight.DayNight
 import com.side.project.air.data.weatherApi.weather.Weather
+import com.side.project.air.utils.Contracts
+import com.side.project.air.utils.MQTTClient
 import com.side.project.air.utils.Method
 import com.side.project.air.utils.Resource
+import com.side.project.air.utils.floatFormat
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -29,6 +32,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application), K
 
     private val fusedLocationClient: FusedLocationProviderClient by inject()
     private val mainRepo: MainRepo by inject()
+    private val mqttClient: MQTTClient by inject()
     private val context: Context
         get() = getApplication<Application>().applicationContext
 
@@ -110,10 +114,45 @@ class MainViewModel(application: Application) : AndroidViewModel(application), K
         get() = _weatherStateIcon
 
     /**
+     * 感測溫度
+     */
+    private val _deviceTemperature = MutableLiveData<String>()
+    val deviceTemperature: LiveData<String>
+        get() = _deviceTemperature
+
+    /**
+     * 感測濕度
+     */
+    private val _deviceHumidity = MutableLiveData<String>()
+    val deviceHumidity: LiveData<String>
+        get() = _deviceHumidity
+
+    /**
+     * 是否開啟自動模式
+     */
+    private val _isOpenAutoMode = MutableLiveData<Boolean>()
+    val isOpenAutoMode: LiveData<Boolean>
+        get() = _isOpenAutoMode
+
+    /**
+     * 溫度閥值
+     */
+    private val _autoModeTemperature = MutableLiveData<String>()
+    val autoModeTemperature: LiveData<String>
+        get() = _autoModeTemperature
+
+    /**
      * 切換設定模式
      */
-    fun setSettingMode() =
-        viewModelScope.launch { _isSettingMode.value = !(_isSettingMode.value ?: false) }
+    fun setSettingMode() {
+        viewModelScope.launch {
+            _isSettingMode.value = !(_isSettingMode.value ?: false)
+            if (isSettingMode.value == true) {
+                subscribeMQTT(Contracts.AUTO_MODE_TOPIC)
+                subscribeMQTT(Contracts.SET_TEMPERATURE_TOPIC)
+            }
+        }
+    }
 
     /**
      * 取得當前位置
@@ -176,6 +215,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application), K
         }
     }
 
+    /**
+     * 取得日出日落時間
+     */
     private fun callDayNightAPI() {
         viewModelScope.launch {
             mainRepo.getDayNight(city.value.toString())
@@ -195,4 +237,66 @@ class MainViewModel(application: Application) : AndroidViewModel(application), K
                 }
         }
     }
+
+    /**
+     * 連線 MQTT Server
+     */
+    fun connectMQTT() {
+        mqttClient.connect() {
+            subscribeMQTT(Contracts.TEMPERATURE_TOPIC)
+            subscribeMQTT(Contracts.HUMIDITY_TOPIC)
+            mqttClient.setListener(object : MQTTClient.OnMQTTMessageArrivedListener {
+                override fun onMessageArrived(topic: String, message: String) {
+                    when (topic) {
+                        Contracts.TEMPERATURE_TOPIC ->
+                            _deviceTemperature.value = message.floatFormat()
+
+                        Contracts.HUMIDITY_TOPIC ->
+                            _deviceHumidity.value = message.floatFormat()
+
+                        Contracts.AUTO_MODE_TOPIC ->
+                            _isOpenAutoMode.value = message == "1"
+
+                        Contracts.SET_TEMPERATURE_TOPIC ->
+                            _autoModeTemperature.value = message
+
+                        else -> Unit
+                    }
+                }
+            })
+        }
+    }
+
+    /**
+     * 斷線 MQTT Server
+     */
+    fun disconnectMQTT() =
+        mqttClient.disconnect()
+
+    /**
+     * 訂閱 MQTT Topic
+     */
+    private fun subscribeMQTT(topic: String) =
+        mqttClient.subscribe(topic)
+
+    /**
+     * 取消訂閱 MQTT Topic
+     */
+    private fun unsubscribeMQTT(topic: String) =
+        mqttClient.unsubscribe(topic)
+
+    /**
+     * 發布到 MQTT Topic
+     */
+    fun publishMQTT(topic: String, message: String, retained: Boolean = false) =
+        mqttClient.publish(topic, message)
+
+    fun openAirConditioner() =
+        publishMQTT(Contracts.ACTIVATE_TOPIC, "1")
+
+    fun closeAirConditioner() =
+        publishMQTT(Contracts.ACTIVATE_TOPIC, "0")
+
+    fun toggleAutoMode() =
+        publishMQTT(Contracts.AUTO_MODE_TOPIC, if (isOpenAutoMode.value == true) "0" else "1", true)
 }

@@ -7,14 +7,15 @@
     <string name="text_off">OFF</string>
     <string name="text_auto_mode">Auto Mode</string>
 
-    <string name="text_max_temp">40°</string>
-    <string name="text_min_temp">18°</string>
+    <string name="text_max_temp">32°</string>
+    <string name="text_min_temp">23°</string>
 
     <string name="text_max_humid">100%</string>
     <string name="text_min_humid">0%</string>
 
     <string name="text_temp">%s°</string>
     <string name="text_rain">降雨機率：%s%%</string>
+    <string name="text_humidity">%s%%</string>
 
     <string name="content_refresh">刷新</string>
     <string name="content_settings">設定</string>

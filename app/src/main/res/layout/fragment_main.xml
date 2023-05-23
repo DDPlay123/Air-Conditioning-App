@@ -118,9 +118,9 @@
             android:id="@+id/imgState"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:loadWeatherIcon="@{viewModel.weatherStateIcon}"
             android:padding="10dp"
             android:src="@drawable/baseline_image_search_24"
-            android:loadWeatherIcon="@{viewModel.weatherStateIcon}"
             app:layout_constraintBottom_toTopOf="@+id/tvState"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guidelineDivider"
@@ -151,6 +151,7 @@
                 android:layout_marginEnd="20dp"
                 android:autoSizeTextType="uniform"
                 android:backgroundTint="@color/green_60E36D"
+                android:onClick='@{() -> viewModel.openAirConditioner()}'
                 android:padding="20dp"
                 android:text="@string/text_on"
                 android:textColor="@color/white"
@@ -172,6 +173,7 @@
                 android:layout_marginStart="20dp"
                 android:autoSizeTextType="uniform"
                 android:backgroundTint="@color/red_E76B6B"
+                android:onClick='@{() -> viewModel.closeAirConditioner()}'
                 android:padding="20dp"
                 android:text="@string/text_off"
                 android:textColor="@color/white"
@@ -192,6 +194,7 @@
                 android:layout_height="0dp"
                 android:autoSizeTextType="uniform"
                 android:backgroundTint="@color/primary"
+                android:clickable="false"
                 android:padding="20dp"
                 android:text="@string/text_auto_mode"
                 android:textColor="@color/white"
@@ -253,7 +256,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgSettings"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imgDevice"
@@ -275,6 +278,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
+                    android:convertTemperature="@{viewModel.deviceTemperature}"
                     android:scaleY="-1"
                     app:cs_circle_color="@color/white_59FFFFF"
                     app:cs_circle_progress_color="@color/white"
@@ -289,7 +293,6 @@
                     app:cs_pointer_halo_color_ontouch="@color/black_44000000"
                     app:cs_pointer_halo_width="4dp"
                     app:cs_pointer_stroke_width="24dp"
-                    app:cs_progress="60"
                     app:cs_start_angle="-70"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
@@ -302,6 +305,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
+                    android:convertHumidity="@{viewModel.deviceHumidity}"
                     app:cs_circle_color="@color/white_59FFFFF"
                     app:cs_circle_progress_color="@color/white"
                     app:cs_circle_stroke_width="8dp"
@@ -316,7 +320,6 @@
                     app:cs_pointer_halo_color_ontouch="@color/black_44000000"
                     app:cs_pointer_halo_width="4dp"
                     app:cs_pointer_stroke_width="24dp"
-                    app:cs_progress="80"
                     app:cs_start_angle="110"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
@@ -328,6 +331,7 @@
                     android:id="@+id/tvDeviceTemp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text='@{String.format(@string/text_temp, viewModel.deviceTemperature)}'
                     android:textColor="@color/primary"
                     android:textSize="64sp"
                     android:textStyle="bold"
@@ -343,6 +347,7 @@
                     android:id="@+id/tvDeviceHumid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text='@{String.format(@string/text_humidity, viewModel.deviceHumidity)}'
                     android:textColor="@color/primary"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -428,7 +433,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imgSettings"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imgAutoMode"
@@ -450,6 +455,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
+                    android:convertTemperature="@{viewModel.autoModeTemperature}"
                     app:cs_circle_color="@color/white_59FFFFF"
                     app:cs_circle_progress_color="@color/white"
                     app:cs_circle_stroke_width="8dp"
@@ -463,7 +469,6 @@
                     app:cs_pointer_halo_color_ontouch="@color/black_44000000"
                     app:cs_pointer_halo_width="4dp"
                     app:cs_pointer_stroke_width="24dp"
-                    app:cs_progress="60"
                     app:cs_start_angle="-210"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
@@ -475,6 +480,7 @@
                     android:id="@+id/tvAutoModeTemp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text='@{String.format(@string/text_temp, viewModel.autoModeTemperature)}'
                     android:textColor="@color/primary"
                     android:textSize="64sp"
                     android:textStyle="bold"
@@ -490,9 +496,11 @@
                     android:id="@+id/switchAutoMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="@{viewModel.isOpenAutoMode}"
                     android:clickable="true"
                     android:focusable="true"
                     android:translationZ="10dp"
+                    android:onClick="@{() -> viewModel.toggleAutoMode()}"
                     app:layout_constraintBottom_toBottomOf="@+id/imgAutoMode"
                     app:layout_constraintEnd_toEndOf="@+id/imgAutoMode"
                     app:layout_constraintStart_toStartOf="@+id/imgAutoMode"
