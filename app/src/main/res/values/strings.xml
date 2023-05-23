@@ -7,8 +7,11 @@
     <string name="text_off">OFF</string>
     <string name="text_auto_mode">Auto Mode</string>
 
-    <string name="text_max_temp">32°</string>
-    <string name="text_min_temp">23°</string>
+    <string name="text_max_auto_mode_temp">32°</string>
+    <string name="text_min_auto_mode_temp">23°</string>
+
+    <string name="text_max_temp">30°</string>
+    <string name="text_min_temp">20°</string>
 
     <string name="text_max_humid">100%</string>
     <string name="text_min_humid">0%</string>

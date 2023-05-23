@@ -36,13 +36,13 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
         binding.apply {
             sbAutoModeTemp.setOnSeekBarChangeListener(object : CircularSeekBar.OnCircularSeekBarChangeListener {
                 override fun onProgressChanged(circularSeekBar: CircularSeekBar?, progress: Float, fromUser: Boolean) {
-                    val temp = (progress / 100) * (Contracts.MAX_TEMPERATURE - Contracts.MIN_TEMPERATURE) + Contracts.MIN_TEMPERATURE
+                    val temp = (progress / 100) * (Contracts.MAX_AUTO_MODE_TEMPERATURE - Contracts.MIN_AUTO_MODE_TEMPERATURE) + Contracts.MIN_AUTO_MODE_TEMPERATURE
                     tvAutoModeTemp.text = String.format(getString(R.string.text_temp), temp.roundToInt())
                 }
 
                 override fun onStopTrackingTouch(seekBar: CircularSeekBar?) {
                     val progress = seekBar?.progress ?: 0f
-                    val temp = (progress / 100) * (Contracts.MAX_TEMPERATURE - Contracts.MIN_TEMPERATURE) + Contracts.MIN_TEMPERATURE
+                    val temp = (progress / 100) * (Contracts.MAX_AUTO_MODE_TEMPERATURE - Contracts.MIN_AUTO_MODE_TEMPERATURE) + Contracts.MIN_AUTO_MODE_TEMPERATURE
                     tvAutoModeTemp.text = String.format(getString(R.string.text_temp), temp.roundToInt())
                     vm.publishMQTT(Contracts.SET_TEMPERATURE_TOPIC, temp.roundToInt().toString(), true)
                 }

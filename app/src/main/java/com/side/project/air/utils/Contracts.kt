@@ -5,8 +5,10 @@ object Contracts {
      * Variable
      */
     const val PERMISSION_CODE = 0
-    const val MAX_TEMPERATURE = 32
-    const val MIN_TEMPERATURE = 23
+    const val MAX_AUTO_MODE_TEMPERATURE = 32
+    const val MIN_AUTO_MODE_TEMPERATURE = 23
+    const val MAX_TEMPERATURE = 30
+    const val MIN_TEMPERATURE = 20
     const val MAX_HUMIDITY = 100
     const val MIN_HUMIDITY = 0
 

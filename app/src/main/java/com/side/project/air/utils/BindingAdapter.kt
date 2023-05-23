@@ -7,8 +7,10 @@ import coil.load
 import com.side.project.air.R
 import com.side.project.air.data.WeatherStateIcon
 import com.side.project.air.utils.Contracts.MAX_HUMIDITY
+import com.side.project.air.utils.Contracts.MAX_AUTO_MODE_TEMPERATURE
 import com.side.project.air.utils.Contracts.MAX_TEMPERATURE
 import com.side.project.air.utils.Contracts.MIN_HUMIDITY
+import com.side.project.air.utils.Contracts.MIN_AUTO_MODE_TEMPERATURE
 import com.side.project.air.utils.Contracts.MIN_TEMPERATURE
 import com.side.project.air.utils.widget.CircularSeekBar
 import java.time.LocalDateTime
@@ -80,6 +82,21 @@ object BindingAdapter {
 
                 else ->
                     imageView.load(R.drawable.baseline_image_search_24, imageLoader = imageView.context.imageLoader)
+            }
+        } catch (ignored: Exception) {
+        }
+    }
+
+    @BindingAdapter("android:convertTemperatureThreshold")
+    @JvmStatic
+    fun setConvertTemperatureThreshold(circularSeekBar: CircularSeekBar, progress: String?) {
+        if (progress == null) return
+        val currentProgress = progress.toFloat()
+        try {
+            when {
+                currentProgress > MAX_AUTO_MODE_TEMPERATURE -> circularSeekBar.progress = 100f
+                currentProgress < MIN_AUTO_MODE_TEMPERATURE -> circularSeekBar.progress = 0.0f
+                else -> circularSeekBar.progress = ((currentProgress - MIN_AUTO_MODE_TEMPERATURE) / (MAX_AUTO_MODE_TEMPERATURE - MIN_AUTO_MODE_TEMPERATURE)) * 100
             }
         } catch (ignored: Exception) {
         }

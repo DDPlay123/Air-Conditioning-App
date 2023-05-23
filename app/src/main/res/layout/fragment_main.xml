@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/primary"
+        android:paddingTop="20dp"
         tools:context=".ui.fragment.MainFragment">
 
         <androidx.constraintlayout.widget.Guideline
@@ -25,18 +26,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent=".5" />
-
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/pbLoading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE, default=gone}"
-            app:layout_anchorGravity="bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="gone" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvRegion"
@@ -49,7 +38,7 @@
             app:layout_constraintEnd_toStartOf="@+id/imgRefresh"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pbLoading"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="台北市 大安區" />
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -124,7 +113,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tvState"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guidelineDivider"
-            app:layout_constraintTop_toBottomOf="@+id/pbLoading" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clControl"
@@ -455,7 +444,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:convertTemperature="@{viewModel.autoModeTemperature}"
+                    android:convertTemperatureThreshold="@{viewModel.autoModeTemperature}"
                     app:cs_circle_color="@color/white_59FFFFF"
                     app:cs_circle_progress_color="@color/white"
                     app:cs_circle_stroke_width="8dp"
@@ -499,8 +488,8 @@
                     android:checked="@{viewModel.isOpenAutoMode}"
                     android:clickable="true"
                     android:focusable="true"
-                    android:translationZ="10dp"
                     android:onClick="@{() -> viewModel.toggleAutoMode()}"
+                    android:translationZ="10dp"
                     app:layout_constraintBottom_toBottomOf="@+id/imgAutoMode"
                     app:layout_constraintEnd_toEndOf="@+id/imgAutoMode"
                     app:layout_constraintStart_toStartOf="@+id/imgAutoMode"
@@ -543,7 +532,7 @@
                     android:id="@+id/tvAutoMaxTemp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_max_temp"
+                    android:text="@string/text_max_auto_mode_temp"
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -559,7 +548,7 @@
                     android:id="@+id/tvAutoMinTemp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_min_temp"
+                    android:text="@string/text_min_auto_mode_temp"
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     android:textStyle="bold"
