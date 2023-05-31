@@ -195,17 +195,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application), K
                         weather.records.locations[0].location[0].weatherElement.forEach { data ->
                             when (data.elementName) {
                                 // 天氣現象
-                                "Wx" -> _weatherState.value = Pair(data.time.last().elementValue[1].value, data.time.last().elementValue[0].value)
+                                "Wx" -> _weatherState.value = Pair(data.time.first().elementValue[1].value, data.time.first().elementValue[0].value)
                                 // 溫度
-                                "T" -> _temperature.value = data.time.last().elementValue[0].value
+                                "T" -> _temperature.value = data.time.first().elementValue[0].value
                                 // 相對濕度
-                                "RH" -> _humidity.value = data.time.last().elementValue[0].value
+                                "RH" -> _humidity.value = data.time.first().elementValue[0].value
                                 // 降雨機率 12h
                                 "PoP12h" ->
-                                    _rain.value = if (data.time.isNotEmpty()) data.time.last().elementValue[0].value else "0"
+                                    _rain.value = if (data.time.isNotEmpty()) data.time.first().elementValue[0].value else "0"
                                 // 降雨機率 6h
                                 "PoP6h" ->
-                                    _rain.value = if (data.time.isNotEmpty()) data.time.last().elementValue[0].value else "0"
+                                    _rain.value = if (data.time.isNotEmpty()) data.time.first().elementValue[0].value else "0"
                                 // 其他資料
                                 else -> Unit
                             }
