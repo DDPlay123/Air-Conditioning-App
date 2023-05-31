@@ -6,6 +6,7 @@ import com.side.project.air.network.ApiClient
 import com.side.project.air.utils.Method
 import com.side.project.air.utils.Resource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
 
@@ -38,16 +39,19 @@ class MainRepoImpl : KoinComponent, MainRepo {
                 if (weather != null)
                     emit(Resource.Success(weather))
                 else
-                    emit(Resource.Error("Unknown Error"))
+                    throw IllegalStateException("Unknown Error")
             } else {
                 Method.logE(TAG, "response is not successful")
-                emit(Resource.Error("Unknown Error"))
+                throw IllegalStateException("Unknown Error")
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Method.logE(TAG, "Exception: ${e.message}")
-            emit(Resource.Error(e.message ?: "Unknown Error"))
         }
+    }.catch { e ->
+        e.printStackTrace()
+        Method.logE(TAG, "Exception in flow: ${e.message}")
+        emit(Resource.Error(e.message ?: "Unknown Error"))
     }
 
     override fun getDayNight(city: String): Flow<Resource<DayNight>> = flow {
@@ -65,15 +69,18 @@ class MainRepoImpl : KoinComponent, MainRepo {
                 if (dayNight != null)
                     emit(Resource.Success(dayNight))
                 else
-                    emit(Resource.Error("Unknown Error"))
+                    throw IllegalStateException("Unknown Error")
             } else {
                 Method.logE(TAG, "response is not successful")
-                emit(Resource.Error("Unknown Error"))
+                throw IllegalStateException("Unknown Error")
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Method.logE(TAG, "Exception: ${e.message}")
-            emit(Resource.Error(e.message ?: "Unknown Error"))
         }
+    }.catch { e ->
+        e.printStackTrace()
+        Method.logE(TAG, "Exception in flow: ${e.message}")
+        emit(Resource.Error(e.message ?: "Unknown Error"))
     }
 }
