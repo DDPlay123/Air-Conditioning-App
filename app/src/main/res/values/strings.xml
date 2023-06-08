@@ -3,6 +3,7 @@
 
     <string name="toast_ask_location_permission">請開啟定位權限</string>
 
+    <string name="text_ok">OK</string>
     <string name="text_on">ON</string>
     <string name="text_off">OFF</string>
     <string name="text_auto_mode">Auto Mode</string>
@@ -22,4 +23,6 @@
 
     <string name="content_refresh">刷新</string>
     <string name="content_settings">設定</string>
+
+    <string name="content_auto_mode">自動模式可以維持冷氣機不會被關閉。</string>
 </resources>

@@ -2,6 +2,8 @@ package com.side.project.air.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.dialog.MaterialDialogs
 import com.side.project.air.R
 import com.side.project.air.databinding.FragmentMainBinding
 import com.side.project.air.ui.base.BaseFragment
@@ -49,6 +51,19 @@ class MainFragment : BaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
                 override fun onStartTrackingTouch(seekBar: CircularSeekBar?) { }
             })
+
+            imgAutoModeDescription.setOnClickListener {
+                val builder = MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
+                with(builder) {
+                    setTitle(getString(R.string.text_auto_mode))
+                    setMessage(getString(R.string.content_auto_mode))
+                    setPositiveButton(getString(R.string.text_ok)) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    create()
+                    show()
+                }
+            }
         }
     }
 }
